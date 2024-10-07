@@ -19,6 +19,8 @@ import datasets.btad as btad
 from datasets.btad import _CLASSNAMES as _CLASSNAMES_btad
 import datasets.rayan_industrial as rayan_industrial
 from datasets.rayan_industrial import _CLASSNAMES as _CLASSNAMES_rayan_industrial
+import datasets.rayan_medical as rayan_medical
+from datasets.rayan_medical import _CLASSNAMES as _CLASSNAMES_rayan_medical
 
 from utils.metrics import compute_metrics
 from utils.helpers import dict_to_json
@@ -54,6 +56,8 @@ class BaseEval:
                     self.categories = _CLASSNAMES_btad
                 elif self.dataset == 'rayan_industrial':
                     self.categories = _CLASSNAMES_rayan_industrial
+                elif self.dataset == 'rayan_medical':
+                    self.categories = _CLASSNAMES_rayan_medical
             else:
                 self.categories = [self.categories]
 
@@ -81,14 +85,16 @@ class BaseEval:
             'visa': visa.VisaDataset,
             'mvtec_ad': mvtec.MVTecDataset,
             'btad': btad.BTADDataset,
-            'rayan_industrial': rayan_industrial.RayanIndustrialDataset
+            'rayan_industrial': rayan_industrial.RayanIndustrialDataset,
+            'rayan_medical': rayan_medical.RayanMedicalDataset
         }
 
         dataset_splits = {
             'visa': visa.DatasetSplit.TEST,
             'mvtec_ad': mvtec.DatasetSplit.TEST,
             'btad': btad.DatasetSplit.TEST,
-            'rayan_industrial': mvtec.DatasetSplit.TEST
+            'rayan_industrial': mvtec.DatasetSplit.TEST,
+            'rayan_medical': mvtec.DatasetSplit.TEST,
         }
 
         test_dataset = dataset_classes[self.dataset](
