@@ -1,0 +1,18 @@
+datasets:
+  dataset_name: 'mvtec_ad'  # choice ['mvtec_ad', 'visa']
+  data_path: ./data/mvtec_anomaly_detection/
+  scores_path: ./scores/mvtec_anomaly_detection
+  class_name: 'ALL'
+  img_resize: 518
+  divide_num: 1
+models:
+  backbone_name: 'ViT-L-14-336'
+device: 0
+testing:
+  output_dir: 'output'
+  run_name: ''
+  vis: False
+  vis_type: single_norm # choice ['single_norm', 'whole_norm']
+  should_save_scores: False
+  save_scores_precision: None
+  save_excel: True

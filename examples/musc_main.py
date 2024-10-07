@@ -1,6 +1,7 @@
 import argparse
 import os
 import sys
+
 sys.path.append(os.getcwd())
 from models.musc import MuSc
 from utils.load_config import load_yaml
@@ -26,6 +27,7 @@ def get_args():
     parser.add_argument('--img_resize', type=int, default=None, help='image size')
     parser.add_argument('--batch_size', type=int, default=None, help='batch size')
     parser.add_argument('--divide_num', type=int, default=None, help='the number of divided subsets')
+    parser.add_argument('--save_scores_precision', type=int, default=None, help='precision (decimal points) for the results')
     args = parser.parse_args()
     return args
 
@@ -75,6 +77,8 @@ def load_args(cfg, args):
         cfg['models']['batch_size'] = args.batch_size
     if args.divide_num is not None:
         cfg['datasets']['divide_num'] = args.divide_num
+    if args.save_scores_precision is not None:
+        cfg['testing']['save_scores_precision'] = args.save_scores_precision
     return cfg
 
 if __name__ == "__main__":

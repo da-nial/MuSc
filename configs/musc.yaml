@@ -12,9 +12,11 @@ models:
   r_list: [1, 3, 5]
 device: 0
 testing:
-  output_dir: 'output'
+  output_dir: 'output/'
   vis: False
   vis_type: single_norm # choice ['single_norm', 'whole_norm']
+  should_save_scores: True
+  save_scores_precision: 16
   save_excel: False
 
 

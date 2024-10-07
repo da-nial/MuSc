@@ -1,9 +1,10 @@
 import os
+import random
 from enum import Enum
+
 import PIL
 import torch
 from torchvision import transforms
-import random
 
 _CLASSNAMES = ["bottle", "cable", "capsule", "carpet", "grid",
             "hazelnut", "leather", "metal_nut", "pill", "screw",
@@ -60,7 +61,7 @@ class MVTecDataset(torch.utils.data.Dataset):
             self.transform_img = transforms.Compose(self.transform_img)
         else:
             self.transform_img = clip_transformer
-            
+
         self.transform_mask = [
             transforms.Resize((resize,resize)),
             transforms.CenterCrop(imagesize),
@@ -69,20 +70,18 @@ class MVTecDataset(torch.utils.data.Dataset):
         self.transform_mask = transforms.Compose(self.transform_mask)
 
         self.imagesize = (3, imagesize, imagesize)
-    
+
     def sub_datasets(self, full_datasets, divide_num, divide_iter, random_seed=42):
         # uniform division
         if divide_num == 0:
             return full_datasets
         random.seed(random_seed)
-
         id_dict = {}
         for i in range(len(full_datasets)):
             anomaly_type = full_datasets[i][2].split('/')[-2]
             if anomaly_type not in id_dict.keys():
                 id_dict[anomaly_type] = []
             id_dict[anomaly_type].append(i)
-
         sub_id_list = []
         for k in id_dict.keys():
             type_id_list = id_dict[k]
@@ -90,7 +89,6 @@ class MVTecDataset(torch.utils.data.Dataset):
             devide_list = [type_id_list[i:i+divide_num] for i in range(0, len(type_id_list), divide_num)]
             sub_list = [devide_list[i][divide_iter] for i in range(len(devide_list)) if len(devide_list[i])>divide_iter]
             sub_id_list.extend(sub_list)
-
         return [full_datasets[id] for id in sub_id_list]
 
     def __getitem__(self, idx):

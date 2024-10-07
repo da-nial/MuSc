@@ -2,14 +2,14 @@
 Adapted from https://github.com/ByChelsea/VAND-APRIL-GAN.
 """
 
-import os
-from enum import Enum
 import json
+import os
+import random
+from enum import Enum
+
 import PIL
 import torch
 from torchvision import transforms
-import numpy as np
-import random
 
 _CLASSNAMES = ["candle", "capsules", "cashew", "chewinggum",
             "fryum", "macaroni1", "macaroni2", "pcb1",
@@ -48,6 +48,7 @@ class VisaDataset(torch.utils.data.Dataset):
         if divide_num > 1:
             # divide into subsets
             self.data_to_iterate = self.sub_datasets(self.data_to_iterate, divide_num, divide_iter, random_seed)
+
         if k_shot > 0:
             # few-shot
             torch.manual_seed(random_seed)
